@@ -14,8 +14,8 @@ class DatabaseSetup:
         """
         Initialize the SQLite database and the SQL schema file.
         """
-        self.db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils', 'quiz_app.db'))
-        self.sql_file = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils', 'tables.sql'))
+        self.db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'utils', 'quiz_app.db'))
+        self.sql_file = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'utils', 'tables.sql'))
         self.conn = None
 
     def connect_to_db(self):
