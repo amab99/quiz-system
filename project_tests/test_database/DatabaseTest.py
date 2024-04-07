@@ -6,13 +6,12 @@ from unittest.mock import patch
 from unittest.mock import MagicMock
 from unittest.mock import mock_open
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from group_2_vt24.database.Database import DatabaseSetup
+from project_src.database.Database import DatabaseSetup
 
 
 class TestDatabase(unittest.TestCase):
-
     """
     Class that contains unit tests for the DatabaseSetup class to ensure database connection,
     and creation of schemas functionality.
@@ -24,7 +23,7 @@ class TestDatabase(unittest.TestCase):
         """ Stop the patches after each test. """
         patch.stopall()
 
-    @patch('group_2_vt24.database.Database.DatabaseSetup.connect_to_db')
+    @patch('project_src.database.Database.DatabaseSetup.connect_to_db')
     def test_successful_connection(self, mock_connect: MagicMock):
         """
         Test method to ensure the database connection.
@@ -40,7 +39,7 @@ class TestDatabase(unittest.TestCase):
         mock_connect.assert_called_once()
         patch.stopall()
 
-    @patch('group_2_vt24.database.Database.DatabaseSetup.connect_to_db')
+    @patch('project_src.database.Database.DatabaseSetup.connect_to_db')
     def test_failed_connection(self, mock_connect: MagicMock):
         """
         Ensure proper handling of a failed database connection.
@@ -62,8 +61,8 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(str(context.exception), "Error when connecting to database")
         mock_connect.assert_called_once()
 
-    @patch('group_2_vt24.database.Database.DatabaseSetup.connect_to_db')
-    @patch('group_2_vt24.database.Database.DatabaseSetup.close_connection')
+    @patch('project_src.database.Database.DatabaseSetup.connect_to_db')
+    @patch('project_src.database.Database.DatabaseSetup.close_connection')
     def test_successful_close_connection(self, mock_connect: MagicMock, mock_close: MagicMock):
         """
         Test method to ensure closing the the database connection.
@@ -83,8 +82,8 @@ class TestDatabase(unittest.TestCase):
         # Assert that the close connection method was called
         mock_close.assert_called_once()
 
-    @patch('group_2_vt24.database.Database.DatabaseSetup.connect_to_db')
-    @patch('group_2_vt24.database.Database.DatabaseSetup.close_connection')
+    @patch('project_src.database.Database.DatabaseSetup.connect_to_db')
+    @patch('project_src.database.Database.DatabaseSetup.close_connection')
     def test_failed_close_connection(self, mock_close: MagicMock, mock_connect: MagicMock):
         """
         Ensure proper handling of a failed database close connection.
