@@ -25,12 +25,11 @@ class StartViewTest(unittest.TestCase):
 
     def setUp(self):
         """ Setup method to create a start view instance before each test. """
-        self.root = tk.Tk()
         self.start_view = StartView()
 
     def tearDown(self):
-        """ Method to destroy the Tk root window after each test. """
-        self.root.destroy()
+        """ Method to destroy the start view instance after each test. """
+        self.start_view.destroy()
 
     def test_menu_bar_exists(self):
         """
@@ -44,7 +43,7 @@ class StartViewTest(unittest.TestCase):
         """
 
         exists = False
-        for child in self.start_view.root.winfo_children():
+        for child in self.start_view.winfo_children():
             if isinstance(child, tk.Menu):
                 exists = True
                 break
@@ -57,10 +56,10 @@ class StartViewTest(unittest.TestCase):
          Raises:
         - AssertionError: If error when creating the widget
          """
-        self.assertIsInstance(self.start_view.root.title_label, Label)
-        self.assertIsInstance(self.start_view.root.start_button, Button)
-        self.assertIsInstance(self.start_view.root.login_button, Button)
-        self.assertIsInstance(self.start_view.root.register_button, Button)
+        self.assertIsInstance(self.start_view.title_label, Label)
+        self.assertIsInstance(self.start_view.start_button, Button)
+        self.assertIsInstance(self.start_view.login_button, Button)
+        self.assertIsInstance(self.start_view.register_button, Button)
 
     def test_Label_properties(self):
         """
@@ -107,7 +106,7 @@ class StartViewTest(unittest.TestCase):
          Raises:
         - AssertionError: If error with the title label position
         """
-        title_label_position = self.start_view.root.title_label.grid_info()
+        title_label_position = self.start_view.title_label.grid_info()
         self.assertEqual(title_label_position['row'], 0)
         self.assertEqual(title_label_position['padx'], 160)
 
@@ -118,7 +117,7 @@ class StartViewTest(unittest.TestCase):
         Raises:
         - AssertionError: If error with the start button position
         """
-        start_button_position = self.start_view.root.start_button.grid_info()
+        start_button_position = self.start_view.start_button.grid_info()
         self.assertEqual(start_button_position['row'], 1)
         self.assertEqual(start_button_position['pady'], 10)
 
@@ -129,7 +128,7 @@ class StartViewTest(unittest.TestCase):
         Raises:
         - AssertionError: If error with the login button position
         """
-        login_button_position = self.start_view.root.login_button.grid_info()
+        login_button_position = self.start_view.login_button.grid_info()
         self.assertEqual(login_button_position['row'], 2)
         self.assertEqual(login_button_position['pady'], 10)
 
@@ -140,7 +139,7 @@ class StartViewTest(unittest.TestCase):
         Raises:
         - AssertionError: If error with the register button position
         """
-        register_button_position = self.start_view.root.register_button.grid_info()
+        register_button_position = self.start_view.register_button.grid_info()
         self.assertEqual(register_button_position['row'], 3)
         self.assertEqual(register_button_position['pady'], 10)
 
@@ -150,7 +149,7 @@ class StartViewTest(unittest.TestCase):
         # Call the method with the mocked callback
         self.start_view.start_button_callback(mock)
         # Trigger the button press event
-        self.start_view.root.start_button.invoke()
+        self.start_view.start_button.invoke()
         mock.assert_called_once()
 
     def test_login_button_callback(self):
@@ -159,7 +158,7 @@ class StartViewTest(unittest.TestCase):
         # Call the method with the mocked callback
         self.start_view.login_button_callback(mock)
         # Trigger the button press event
-        self.start_view.root.login_button.invoke()
+        self.start_view.login_button.invoke()
         mock.assert_called_once()
 
     def test_register_button_callback(self):
@@ -168,7 +167,7 @@ class StartViewTest(unittest.TestCase):
         # Call the method with the mocked callback
         self.start_view.register_button_callback(mock)
         # Trigger the button press event
-        self.start_view.root.register_button.invoke()
+        self.start_view.register_button.invoke()
         mock.assert_called_once()
 
     @patch('tkinter.Tk.winfo_screenwidth', return_value=800)
@@ -185,14 +184,14 @@ class StartViewTest(unittest.TestCase):
         - AssertionError: If error when centering the window
         """
         self.start_view.center_window()
-        self.start_view.root.update_idletasks()
+        self.start_view.update_idletasks()
 
         # Expected center coordinates based on mocked screen width and height
         x = (800 - 600) // 2
         y = (600 - 300) // 2
 
-        self.assertEqual(self.start_view.root.winfo_x(), x)
-        self.assertEqual(self.start_view.root.winfo_y(), y)
+        self.assertEqual(self.start_view.winfo_x(), x)
+        self.assertEqual(self.start_view.winfo_y(), y)
 
     def test_that_method_exist(self):
         """
