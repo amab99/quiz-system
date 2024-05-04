@@ -31,8 +31,8 @@ class RegisterViewTest(unittest.TestCase):
         self.register_view = RegisterView()
 
     def tearDown(self):
-        """ Method to destroy the register view root after each test. """
-        self.register_view.root.destroy()
+        """ Method to destroy the register view instance after each test. """
+        self.register_view.destroy()
 
     def test_create_widgets(self):
         """
@@ -41,16 +41,16 @@ class RegisterViewTest(unittest.TestCase):
          Raises:
         - AssertionError: If error when creating the widget
          """
-        self.assertIsInstance(self.register_view.root.logo_label.image, PhotoImage)
-        self.assertIsInstance(self.register_view.root.logo_label, Label)
-        self.assertIsInstance(self.register_view.root.title_label, Label)
-        self.assertIsInstance(self.register_view.root.username_label, Label)
-        self.assertIsInstance(self.register_view.root.username_entry, Entry)
-        self.assertIsInstance(self.register_view.root.password_label, Label)
-        self.assertIsInstance(self.register_view.root.confirm_password_label, Label)
-        self.assertIsInstance(self.register_view.root.password_entry, Entry)
-        self.assertIsInstance(self.register_view.root.confirm_password_entry, Entry)
-        self.assertIsInstance(self.register_view.root.register_button, Button)
+        self.assertIsInstance(self.register_view.logo_label.image, PhotoImage)
+        self.assertIsInstance(self.register_view.logo_label, Label)
+        self.assertIsInstance(self.register_view.title_label, Label)
+        self.assertIsInstance(self.register_view.username_label, Label)
+        self.assertIsInstance(self.register_view.username_entry, Entry)
+        self.assertIsInstance(self.register_view.password_label, Label)
+        self.assertIsInstance(self.register_view.confirm_password_label, Label)
+        self.assertIsInstance(self.register_view.password_entry, Entry)
+        self.assertIsInstance(self.register_view.confirm_password_entry, Entry)
+        self.assertIsInstance(self.register_view.register_button, Button)
 
     def test_get_username(self):
         """
@@ -59,7 +59,7 @@ class RegisterViewTest(unittest.TestCase):
          Raises:
         - AssertionError: If error when retrieve the username
         """
-        self.register_view.root.username_entry.insert(0, "admin1")
+        self.register_view.username_entry.insert(0, "admin1")
         self.assertEqual(self.register_view.get_username(), "admin1")
 
     def test_get_password(self):
@@ -69,7 +69,7 @@ class RegisterViewTest(unittest.TestCase):
         Raises:
         - AssertionError: If error when retrieve the password
         """
-        self.register_view.root.password_entry.insert(0, "1234")
+        self.register_view.password_entry.insert(0, "1234")
         self.assertEqual(self.register_view.get_password(), "1234")
 
     def test_get_confirmed_password(self):
@@ -79,14 +79,14 @@ class RegisterViewTest(unittest.TestCase):
         Raises:
         - AssertionError: If error when retrieve the password
         """
-        self.register_view.root.confirm_password_entry.insert(0, "1234")
+        self.register_view.confirm_password_entry.insert(0, "1234")
         self.assertEqual(self.register_view.get_confirm_password(), "1234")
 
     def test_register_button_callback(self):
         """ Test the register button callback functionality """
         mock = Mock()
         self.register_view.register_button_callback(mock)
-        self.register_view.root.register_button.invoke()
+        self.register_view.register_button.invoke()
         mock.assert_called_once()
 
     @patch.object(messagebox, 'showerror')
@@ -114,14 +114,14 @@ class RegisterViewTest(unittest.TestCase):
         - AssertionError: If error when centering the window
         """
         self.register_view.center_window()
-        self.register_view.root.update_idletasks()
+        self.register_view.update_idletasks()
 
         # Expected center coordinates based on mocked screen width and height
         x = (800 - 400) // 2
         y = (600 - 450) // 2
 
-        self.assertEqual(self.register_view.root.winfo_x(), x)
-        self.assertEqual(self.register_view.root.winfo_y(), y)
+        self.assertEqual(self.register_view.winfo_x(), x)
+        self.assertEqual(self.register_view.winfo_y(), y)
 
     def test_that_method_exist(self):
         """
