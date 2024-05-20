@@ -6,7 +6,7 @@ from tkinter import messagebox
 from tkinter import Button
 
 
-class LoginView(tk.Tk):
+class LoginView(tk.Toplevel):
     """
     A login window for login to the quiz system using username and password.
 
@@ -76,6 +76,11 @@ class LoginView(tk.Tk):
     def get_password(self):
         """ Method to retrieve the password from the login form """
         return self.password_entry.get()
+
+    def clear_input_fields(self):
+        """Clear the username and password fields."""
+        self.username_entry.delete(0, tk.END)
+        self.password_entry.delete(0, tk.END)
 
     def login_button_callback(self, callback):
         """

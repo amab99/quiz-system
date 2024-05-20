@@ -184,13 +184,17 @@ class TestLoginView(unittest.TestCase):
 
     @patch('tkinter.Tk.winfo_screenwidth', return_value=800)
     @patch('tkinter.Tk.winfo_screenheight', return_value=600)
-    def test_center_window(self, screen_width: int, screen_height: int):
+    @patch.object(LoginView, 'winfo_x', return_value=200)
+    @patch.object(LoginView, 'winfo_y', return_value=75)
+    def test_center_window(self, mock_winfo_x, mock_winfo_y, screen_width: int, screen_height: int):
         """
         Test the behaviour of center the view window on the center of the screen.
 
         Parameters:
-        - screen_width (int): The screen width mocked
-        - screen_height (int): The screen height mocked
+        - mock_winfo_x (Mock): Mocked method for window X coordinate
+        - mock_winfo_y (Mock): Mocked method for window Y coordinate
+        - screen_width (int): Mocked screen width
+        - screen_height (int): Mocked screen height
 
         Raises:
         - AssertionError: If error when centering the window
