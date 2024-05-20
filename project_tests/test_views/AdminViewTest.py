@@ -204,13 +204,17 @@ class AdminViewTest(unittest.TestCase):
 
     @patch('tkinter.Tk.winfo_screenwidth', return_value=1200)
     @patch('tkinter.Tk.winfo_screenheight', return_value=1000)
-    def test_center_window(self, screen_width: int, screen_height: int):
+    @patch.object(AdminView, 'winfo_x', return_value=55)
+    @patch.object(AdminView, 'winfo_y', return_value=190)
+    def test_center_window(self, mock_winfo_x, mock_winfo_y, screen_width: int, screen_height: int):
         """
         Test the behaviour of center the view on the center of the screen.
 
         Parameters:
-        - screen_width (int): The screen width mocked
-        - screen_height (int): The screen height mocked
+        - mock_winfo_x (Mock): Mocked method for window X coordinate
+        - mock_winfo_y (Mock): Mocked method for window Y coordinate
+        - screen_width (int): Mocked screen width
+        - screen_height (int): Mocked screen height
 
         Raises:
         - AssertionError: If error when centering the window
@@ -224,6 +228,67 @@ class AdminViewTest(unittest.TestCase):
 
         self.assertEqual(self.admin_view.winfo_x(), x)
         self.assertEqual(self.admin_view.winfo_y(), y)
+
+
+    def test_set_question_text(self):
+        """
+        Test the functionality of setting the question text in the entry field.
+
+        Raises:
+        - AssertionError: If error when setting the question text
+        """
+        self.admin_view.set_question_text("What is the capital of France?")
+        self.assertEqual(self.admin_view.question_entry.get(), "What is the capital of France?")
+
+    def test_set_first_option(self):
+        """
+        Test the functionality of setting the first option text in the entry field.
+
+        Raises:
+        - AssertionError: If error when setting the first option text
+        """
+        self.admin_view.set_first_option("Paris")
+        self.assertEqual(self.admin_view.option1_entry.get(), "Paris")
+
+    def test_set_second_option(self):
+        """
+        Test the functionality of setting the second option text in the entry field.
+
+        Raises:
+        - AssertionError: If error when setting the second option text
+        """
+        self.admin_view.set_second_option("Lyon")
+        self.assertEqual(self.admin_view.option2_entry.get(), "Lyon")
+
+    def test_set_third_option(self):
+        """
+        Test the functionality of setting the third option text in the entry field.
+
+        Raises:
+        - AssertionError: If error when setting the third option text
+        """
+        self.admin_view.set_third_option("Marseille")
+        self.assertEqual(self.admin_view.option3_entry.get(), "Marseille")
+
+    def test_set_fourth_option(self):
+        """
+        Test the functionality of setting the fourth option text in the entry field.
+
+        Raises:
+        - AssertionError: If error when setting the fourth option text
+        """
+        self.admin_view.set_fourth_option("Nice")
+        self.assertEqual(self.admin_view.option4_entry.get(), "Nice")
+
+    def test_set_correct_option(self):
+        """
+        Test the functionality of setting the correct option value in the entry field.
+
+        Raises:
+        - AssertionError: If error when setting the correct option value
+        """
+        self.admin_view.set_correct_option(1)
+        self.assertEqual(self.admin_view.correct_option_entry.get(), "1")
 
     def test_that_method_exist(self):
         """
@@ -254,7 +319,13 @@ class AdminViewTest(unittest.TestCase):
             "update_table",
             "clear_input_entries",
             "display_error_message",
-            "center_window"
+            "center_window",
+            "set_question_text",
+            "set_first_option",
+            "set_second_option",
+            "set_third_option",
+            "set_fourth_option",
+            "set_correct_option"
         ]
         class_methods = [method for method in dir(self.admin_view) if callable(getattr(self.admin_view, method))]
 
@@ -290,7 +361,13 @@ class AdminViewTest(unittest.TestCase):
             "update_table": ['data'],
             "clear_input_entries": [],
             "display_error_message": ['error'],
-            "center_window": []
+            "center_window": [],
+            "set_question_text": ['text'],
+            "set_first_option": ['text'],
+            "set_second_option": ['text'],
+            "set_third_option": ['text'],
+            "set_fourth_option": ['text'],
+            "set_correct_option": ['value']
         }
         for method, exp_params in methods_parameters.items():
             with self.subTest(method=method):

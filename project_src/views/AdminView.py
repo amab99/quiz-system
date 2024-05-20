@@ -7,7 +7,7 @@ from tkinter import Entry
 from tkinter import messagebox
 
 
-class AdminView(tk.Tk):
+class AdminView(tk.Toplevel):
     """
     This class represents the view for the admin to manage the quiz questions data.
     This view contains a Treeview with columns representing the questions with its id, options and correct options.
@@ -63,7 +63,7 @@ class AdminView(tk.Tk):
         """ Create Treeview-widget with columns and heading used to display the quiz questions data. """
         style = ttk.Style()
         style.map('Treeview', background=[('selected', '#90CAF9')])
-        self.table = ttk.Treeview()
+        self.table = ttk.Treeview(self)
         self.table.grid(row=0, column=0, columnspan=6, sticky="news")
         self.table['columns'] = (
             'ID', 'Question', "Option 1", "Option 2", "Option 3", "Option 4", "Correct Option")
@@ -92,7 +92,7 @@ class AdminView(tk.Tk):
         Create a entries frame including the labels and entries for the question text,
         the four options and the correct option text.
         """
-        entries_frame = tk.Frame(bg="#f0f0f0", pady=15)
+        entries_frame = tk.Frame(self,bg="#f0f0f0", pady=15)
         entries_frame.grid(row=1, column=1, padx=190, pady=10, sticky="news")
 
         self.question_label = tk.Label(entries_frame, text="Question Text:", font=("Source Serif Pro", 14), fg="#333")
@@ -137,7 +137,7 @@ class AdminView(tk.Tk):
         Create a navigation frame including the buttons for add new question,
         update existing question, delete question, clear text entries and logout.
         """
-        nav_frame = tk.Frame(bg="#f0f0f0", pady=15, highlightbackground="#90CAF9", highlightthickness=1)
+        nav_frame = tk.Frame(self,bg="#f0f0f0", pady=15, highlightbackground="#90CAF9", highlightthickness=1)
         nav_frame.grid(row=8, column=1, padx=190, pady=10, sticky="news")
 
         self.add_btn = tk.Button(nav_frame, text="Add Question", font=("Arial", 12, "italic"), bg="#90CAF9")
@@ -310,6 +310,66 @@ class AdminView(tk.Tk):
         self.option3_entry.delete(0, tk.END)
         self.option4_entry.delete(0, tk.END)
         self.correct_option_entry.delete(0, tk.END)
+
+    def set_question_text(self, text: str):
+        """
+        Method to set the question text in the entry field.
+
+        Parameters:
+            text (str): The text to be set in the question entry field.
+        """
+        self.question_entry.delete(0, tk.END)
+        self.question_entry.insert(0, text)
+
+    def set_first_option(self, text: str):
+        """
+        Method to set the first option text in the entry field.
+
+        Parameters:
+            text (str): The text to be set in the first option entry field.
+        """
+        self.option1_entry.delete(0, tk.END)
+        self.option1_entry.insert(0, text)
+
+    def set_second_option(self, text: str):
+        """
+        Method to set the second option text in the entry field.
+
+        Parameters:
+            text (str): The text to be set in the second option entry field.
+        """
+        self.option2_entry.delete(0, tk.END)
+        self.option2_entry.insert(0, text)
+
+    def set_third_option(self, text: str):
+        """
+        Method to set the third option text in the entry field.
+
+        Parameters:
+            text (str): The text to be set in the third option entry field.
+        """
+        self.option3_entry.delete(0, tk.END)
+        self.option3_entry.insert(0, text)
+
+    def set_fourth_option(self, text: str):
+        """
+        Method to set the fourth option text in the entry field.
+
+        Parameters:
+            text (str): The text to be set in the fourth option entry field.
+        """
+        self.option4_entry.delete(0, tk.END)
+        self.option4_entry.insert(0, text)
+
+    def set_correct_option(self, value: int):
+        """
+        Method to set the correct option value in the entry field.
+
+        Parameters:
+            value (int): The value to be set in the correct option entry field.
+        """
+        self.correct_option_entry.delete(0, tk.END)
+        self.correct_option_entry.insert(0, str(value))
 
     @staticmethod
     def display_error_message(error: str):
