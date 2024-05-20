@@ -1,12 +1,12 @@
 import tkinter as tk
-from tkinter import Frame
+from tkinter import Frame, messagebox
 from tkinter import Label
 from tkinter import IntVar
 from tkinter import Button
 from tkinter import Radiobutton
 
 
-class PerformQuizView(tk.Tk):
+class PerformQuizView(tk.Toplevel):
     """
     This class represents the view for performing the quiz.
     This view contains A question label for the quiz question and four Radio button for the answer's options,
@@ -45,7 +45,7 @@ class PerformQuizView(tk.Tk):
         """ Create and place the widgets in the view. """
 
         # Create the main frame with the question label and options radio buttons and add properties
-        self.main_frame = tk.Frame(background="#f0f0f0", pady=15, highlightbackground="#90CAF9", highlightthickness=1)
+        self.main_frame = tk.Frame(self,background="#f0f0f0", pady=15, highlightbackground="#90CAF9", highlightthickness=1)
         self.question_label = tk.Label(self.main_frame, text="Question Text ", font=("Source Serif Pro", 15))
         self.option_var = tk.IntVar(value=None)
         self.opt1 = tk.Radiobutton(self.main_frame, variable=self.option_var, value=1, text="Option 1",
@@ -58,7 +58,7 @@ class PerformQuizView(tk.Tk):
                                    font=("Arial", 12, "italic"))
 
         # Create the navigation frame including the buttons and the timer label with its properties
-        self.nav_frame = tk.Frame(background="#f0f0f0", pady=15, highlightbackground="#90CAF9", highlightthickness=1)
+        self.nav_frame = tk.Frame(self, background="#f0f0f0", pady=15, highlightbackground="#90CAF9", highlightthickness=1)
         self.prev_button = tk.Button(self.nav_frame, text="Previous", width=10, font=("Arial", 12, "italic"),
                                      background="#90CAF9")
         self.next_button = tk.Button(self.nav_frame, text="Next", width=10, font=("Arial", 12, "italic"),
@@ -100,6 +100,21 @@ class PerformQuizView(tk.Tk):
         self.opt2.config(text=options[1])
         self.opt3.config(text=options[2])
         self.opt4.config(text=options[3])
+
+
+    def update_question(self, question_text: str, option1: str, option2: str, option3: str, option4: str):
+        """
+        Method to update the view with the current question and its options.
+
+        Parameters:
+            question_text (str): The text of the question.
+            option1 (str): The text of the first option.
+            option2 (str): The text of the second option.
+            option3 (str): The text of the third option.
+            option4 (str): The text of the fourth option.
+        """
+        self.set_question_text(question_text)
+        self.set_answer_options([option1, option2, option3, option4])
 
     def set_selected_option(self, option: str):
         """
@@ -202,6 +217,25 @@ class PerformQuizView(tk.Tk):
             return self.opt4.cget("text")
         else:
             return None
+
+    def update_timer(self, time_text: str):
+        """
+        Method to update the timer label.
+
+        Parameters:
+        - time_text (str): The text representing the elapsed time.
+        """
+        self.timer_label.config(text=time_text)
+
+    def show_results(self, result_message: str):
+        """
+        Method to display the quiz results in a message box.
+
+        Parameters:
+        - result_message (str): The message displaying the quiz results.
+        """
+        messagebox.showinfo("Quiz Results", result_message)
+
 
     def center_window(self):
         """ Method used to center the view window on the center of the screen. """
