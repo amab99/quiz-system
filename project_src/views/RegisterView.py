@@ -6,7 +6,7 @@ from tkinter import Button
 import os
 
 
-class RegisterView(tk.Tk):
+class RegisterView(tk.Toplevel):
     """
     A register window for register new admin to the quiz system by username and password.
 
@@ -95,6 +95,12 @@ class RegisterView(tk.Tk):
         This method should handle the event to register to the quiz system as admin.
         """
         self.register_button.config(command=callback)
+
+    def clear_input_fields(self):
+        """Clear the username and password fields."""
+        self.username_entry.delete(0, tk.END)
+        self.password_entry.delete(0, tk.END)
+        self.confirm_password_entry.delete(0, tk.END)
 
     @staticmethod
     def display_error_message(error: str):
