@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import MagicMock
+from tkinter import messagebox
 from unittest.mock import patch
 from unittest.mock import Mock
 import inspect
@@ -175,15 +176,30 @@ class TestPerformQuizView(unittest.TestCase):
         self.quiz_view.option_var.get.return_value = 4
         self.assertEqual(self.quiz_view.get_selected_option(), "Rome")
 
+
+    def test_update_question(self):
+        """ Test method to ensure the functionality of updating the question and options. """
+        self.quiz_view.set_question_text = MagicMock()
+        self.quiz_view.set_answer_options = MagicMock()
+        question_text = "What is the capital of Italy?"
+        options = ["Paris", "Berlin", "Rome", "Madrid"]
+        self.quiz_view.update_question(question_text, options[0], options[1], options[2], options[3])
+        self.quiz_view.set_question_text.assert_called_once_with(question_text)
+        self.quiz_view.set_answer_options.assert_called_once_with(options)
+
     @patch('tkinter.Tk.winfo_screenwidth', return_value=1200)
     @patch('tkinter.Tk.winfo_screenheight', return_value=1000)
-    def test_center_window(self, screen_width: int, screen_height: int):
+    @patch.object(PerformQuizView, 'winfo_x', return_value=200)
+    @patch.object(PerformQuizView, 'winfo_y', return_value=200)
+    def test_center_window(self, mock_winfo_x, mock_winfo_y, screen_width: int, screen_height: int):
         """
         Test the behaviour of center the view on the center of the screen.
 
         Parameters:
-        - screen_width (int): The screen width mocked
-        - screen_height (int): The screen height mocked
+        - mock_winfo_x (Mock): Mocked method for window X coordinate
+        - mock_winfo_y (Mock): Mocked method for window Y coordinate
+        - screen_width (int): Mocked screen width
+        - screen_height (int): Mocked screen height
 
         Raises:
         - AssertionError: If error when centering the window
@@ -197,6 +213,31 @@ class TestPerformQuizView(unittest.TestCase):
 
         self.assertEqual(self.quiz_view.winfo_x(), x)
         self.assertEqual(self.quiz_view.winfo_y(), y)
+
+
+    @patch.object(messagebox, 'showinfo')
+    def test_show_results(self, mock_showinfo):
+        """
+        Test the show results method functionality.
+
+        Parameters:
+        - mock_showinfo (MagicMock): MagicMock object to mock the showinfo method
+        """
+        result_message = "You scored 80%!"
+        self.quiz_view.show_results(result_message)
+        mock_showinfo.assert_called_once_with("Quiz Results", result_message)
+
+    def test_update_timer(self):
+        """
+        Test the functionality of updating the timer label.
+
+        Raises:
+        - AssertionError: If error when updating the timer label
+        """
+        self.quiz_view.timer_label = MagicMock()
+        time_text = "Time: 05:00"
+        self.quiz_view.update_timer(time_text)
+        self.quiz_view.timer_label.config.assert_called_once_with(text=time_text)
 
     def test_that_method_exist(self):
         """
@@ -219,6 +260,9 @@ class TestPerformQuizView(unittest.TestCase):
             "clear_selected_options",
             "get_selected_option",
             "center_window",
+            "update_question",
+            "show_results",
+            "update_timer"
         ]
         class_methods = [method for method in dir(self.quiz_view) if callable(getattr(self.quiz_view, method))]
 
@@ -246,6 +290,9 @@ class TestPerformQuizView(unittest.TestCase):
             "clear_selected_options": [],
             "get_selected_option": [],
             "center_window": [],
+            "update_question": ['question_text', 'option1', 'option2', 'option3', 'option4'],
+            "show_results": ['result_message'],
+            "update_timer": ['time_text']
         }
         for method, exp_params in methods_parameters.items():
             with self.subTest(method=method):
