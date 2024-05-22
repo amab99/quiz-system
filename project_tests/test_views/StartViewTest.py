@@ -1,7 +1,7 @@
 import unittest
 
 import tkinter as tk
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from unittest.mock import Mock
 from tkinter import Label
 from tkinter import Button
@@ -193,6 +193,17 @@ class StartViewTest(unittest.TestCase):
         self.assertEqual(self.start_view.winfo_x(), x)
         self.assertEqual(self.start_view.winfo_y(), y)
 
+    @patch('tkinter.messagebox.showinfo')
+    def test_usage_guide_option(self, mock_messagebox: MagicMock):
+        """
+        Test the creation of the message box.
+
+         Parameters:
+        - mock (MagickMock): MagicMock object to mock the messagebox
+        """
+        self.start_view.show_information()
+        mock_messagebox.assert_called_once()
+
     def test_that_method_exist(self):
         """
         Tests that all expected methods exist in the class.
@@ -208,6 +219,7 @@ class StartViewTest(unittest.TestCase):
             'login_button_callback',
             'register_button_callback',
             'center_window',
+            'show_information',
         ]
         class_methods = [method for method in dir(self.start_view) if callable(getattr(self.start_view, method))]
 
@@ -229,6 +241,7 @@ class StartViewTest(unittest.TestCase):
             "login_button_callback": ['callback'],
             "register_button_callback": ['callback'],
             "center_window": [],
+            "show_information": [],
         }
         for method, exp_params in methods_parameters.items():
             with self.subTest(method=method):

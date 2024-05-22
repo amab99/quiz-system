@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import Button
 from tkinter import Label
+from tkinter import messagebox
 
 from project_src.views.MenuBar import MenuBar
 
@@ -126,3 +127,7 @@ class StartView(tk.Tk):
         # Set the geometry of the window
         self.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
+    @staticmethod
+    def show_information():
+        """ Message box with information on how to display the application usage guide. """
+        messagebox.showinfo("Information", "For usage instructions, go to Info > Usage Guide in the menu bar.")

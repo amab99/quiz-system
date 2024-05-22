@@ -85,3 +85,4 @@ class StartController:
         Show the start view.
         """
         self.start_view.deiconify()
+        self.start_view.show_information()

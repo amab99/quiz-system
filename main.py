@@ -30,6 +30,7 @@ def main():
 
     # Initialize the StartController
     start_controller = StartController(root, admin_model, quiz_model)
+    start_controller.show_start_view()
 
     # Start the main loop
     root.mainloop()
